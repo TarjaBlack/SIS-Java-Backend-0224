@@ -10,7 +10,7 @@ public class BoletoSimpleFactory {
 
         Boleto boleto = null;
 
-        switch (vencimento) { // 10, 20 ou 60
+        switch (vencimento) { // 10, 30 ou 60
             case 10:
                 boleto = new Boleto10d(valor);
                 break;
