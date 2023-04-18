@@ -38,4 +38,12 @@ public class FuncaoDto implements Serializable {
     public void setAutoridade(String autoridade) {
         this.autoridade = autoridade;
     }
+
+    @Override
+    public String toString() {
+        return "FuncaoDto{" +
+                "id=" + id +
+                ", autoridade='" + autoridade + '\'' +
+                '}';
+    }
 }

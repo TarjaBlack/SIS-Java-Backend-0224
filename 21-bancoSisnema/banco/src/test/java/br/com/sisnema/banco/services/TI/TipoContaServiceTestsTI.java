@@ -1,10 +1,9 @@
 package br.com.sisnema.banco.services.TI;
 
-import br.com.sisnema.banco.dtos.FuncaoDto;
+import br.com.sisnema.banco.dtos.TipoContaDto;
 import br.com.sisnema.banco.factories.Factory;
-import br.com.sisnema.banco.repositories.FuncaoRepository;
-import br.com.sisnema.banco.services.FuncaoService;
-import br.com.sisnema.banco.services.exceptions.IntegridadeBD;
+import br.com.sisnema.banco.repositories.TipoContaRepository;
+import br.com.sisnema.banco.services.TipoContaService;
 import br.com.sisnema.banco.services.exceptions.RecursoNaoEncontrado;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,20 +16,20 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
-public class FuncaoServiceTestsTI {
+public class TipoContaServiceTestsTI {
 
     @Autowired
-    private FuncaoService service;
+    private TipoContaService service;
 
     @Autowired
-    private FuncaoRepository repository;
+    private TipoContaRepository repository;
 
     private Long idExistente;
     private Long idNaoExistente;
     private Long idChaveEstrangeira;
     private Long idParaDelecao;
-    private Long contagemTotalDeFuncoes;
-    private FuncaoDto funcaoDto;
+    private Long contagemTotalDeTipoContas;
+    private TipoContaDto tipoContaDto;
 
     @BeforeEach
     void Setup() throws Exception {
@@ -38,20 +37,20 @@ public class FuncaoServiceTestsTI {
         idNaoExistente = 999L;
         idChaveEstrangeira = 2L;
         idParaDelecao = 4L;
-        contagemTotalDeFuncoes = 4L;
-        funcaoDto = Factory.criarFuncaoDto();
+        contagemTotalDeTipoContas = 4L;
+        tipoContaDto = Factory.criarTipoContaDto();
     }
 
     @Test
     public void procurarTodosDeveriaRetornarUmaListaDeDtos() {
-        List<FuncaoDto> lista = service.procurarTodos();
+        List<TipoContaDto> lista = service.procurarTodos();
 
         Assertions.assertFalse(lista.isEmpty());
     }
 
     @Test
     public void procurarPorIdDeveriaRetornarUmDtoQuandoOIdExistir() {
-        FuncaoDto resultado = service.procurarPorId(idExistente);
+        TipoContaDto resultado = service.procurarPorId(idExistente);
 
         Assertions.assertNotNull(resultado);
     }
@@ -65,31 +64,31 @@ public class FuncaoServiceTestsTI {
 
     @Test
     public void inserirDeveriaGravarUmObjetoNoBancoDeDados() {
-        FuncaoDto resultado = service.inserir(funcaoDto);
+        TipoContaDto resultado = service.inserir(tipoContaDto);
 
-        Assertions.assertEquals(contagemTotalDeFuncoes + 1, repository.count());
+        Assertions.assertEquals(contagemTotalDeTipoContas + 1, repository.count());
     }
 
     @Test
     public void atualizarDeveriaGravarNovamenteUmMesmoObjeto() {
-        FuncaoDto resultado = service.atualizar(idExistente, funcaoDto);
+        TipoContaDto resultado = service.atualizar(idExistente, tipoContaDto);
 
         Assertions.assertNotNull(resultado);
-        System.out.println("Registro atualizado em Funcao: " + resultado);
+        System.out.println("Registro atualizado em TipoConta: " + resultado);
     }
 
     @Test
     public void atualizarDeveriaLancarUmaExcecaoDeIdNaoEncontrado() {
         Assertions.assertThrows(RecursoNaoEncontrado.class, () -> {
-            service.atualizar(idNaoExistente, funcaoDto);
+            service.atualizar(idNaoExistente, tipoContaDto);
         });
     }
 
     @Test
     public void excluirDeveriaEliminarUmRegistro() {
-        service.excluir(idParaDelecao); // 4L
+        service.excluir(idParaDelecao);
 
-        Assertions.assertEquals(contagemTotalDeFuncoes - 1, repository.count());
+        Assertions.assertEquals(contagemTotalDeTipoContas - 1, repository.count());
     }
 
     @Test

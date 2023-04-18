@@ -1,10 +1,9 @@
 package br.com.sisnema.banco.services.TI;
 
-import br.com.sisnema.banco.dtos.FuncaoDto;
+import br.com.sisnema.banco.dtos.UsuarioDto;
 import br.com.sisnema.banco.factories.Factory;
-import br.com.sisnema.banco.repositories.FuncaoRepository;
-import br.com.sisnema.banco.services.FuncaoService;
-import br.com.sisnema.banco.services.exceptions.IntegridadeBD;
+import br.com.sisnema.banco.repositories.UsuarioRepository;
+import br.com.sisnema.banco.services.UsuarioService;
 import br.com.sisnema.banco.services.exceptions.RecursoNaoEncontrado;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,41 +16,41 @@ import java.util.List;
 
 @SpringBootTest
 @Transactional
-public class FuncaoServiceTestsTI {
+public class UsuarioServiceTestsTI {
 
     @Autowired
-    private FuncaoService service;
+    private UsuarioService service;
 
     @Autowired
-    private FuncaoRepository repository;
+    private UsuarioRepository repository;
 
     private Long idExistente;
     private Long idNaoExistente;
     private Long idChaveEstrangeira;
     private Long idParaDelecao;
-    private Long contagemTotalDeFuncoes;
-    private FuncaoDto funcaoDto;
+    private Long contagemTotalDeUsuarios;
+    private UsuarioDto usuarioDto;
 
     @BeforeEach
     void Setup() throws Exception {
         idExistente = 1L;
         idNaoExistente = 999L;
         idChaveEstrangeira = 2L;
-        idParaDelecao = 4L;
-        contagemTotalDeFuncoes = 4L;
-        funcaoDto = Factory.criarFuncaoDto();
+        idParaDelecao = 3L;
+        contagemTotalDeUsuarios = 3L;
+        usuarioDto = Factory.criarUsuarioDto();
     }
 
     @Test
     public void procurarTodosDeveriaRetornarUmaListaDeDtos() {
-        List<FuncaoDto> lista = service.procurarTodos();
+        List<UsuarioDto> lista = service.procurarTodos();
 
         Assertions.assertFalse(lista.isEmpty());
     }
 
     @Test
     public void procurarPorIdDeveriaRetornarUmDtoQuandoOIdExistir() {
-        FuncaoDto resultado = service.procurarPorId(idExistente);
+        UsuarioDto resultado = service.procurarPorId(idExistente);
 
         Assertions.assertNotNull(resultado);
     }
@@ -65,31 +64,31 @@ public class FuncaoServiceTestsTI {
 
     @Test
     public void inserirDeveriaGravarUmObjetoNoBancoDeDados() {
-        FuncaoDto resultado = service.inserir(funcaoDto);
+        UsuarioDto resultado = service.inserir(usuarioDto);
 
-        Assertions.assertEquals(contagemTotalDeFuncoes + 1, repository.count());
+        Assertions.assertEquals(contagemTotalDeUsuarios + 1, repository.count());
     }
 
     @Test
     public void atualizarDeveriaGravarNovamenteUmMesmoObjeto() {
-        FuncaoDto resultado = service.atualizar(idExistente, funcaoDto);
+        UsuarioDto resultado = service.atualizar(idExistente, usuarioDto);
 
         Assertions.assertNotNull(resultado);
-        System.out.println("Registro atualizado em Funcao: " + resultado);
+        System.out.println("Registro atualizado em Usuario: " + resultado);
     }
 
     @Test
     public void atualizarDeveriaLancarUmaExcecaoDeIdNaoEncontrado() {
         Assertions.assertThrows(RecursoNaoEncontrado.class, () -> {
-            service.atualizar(idNaoExistente, funcaoDto);
+            service.atualizar(idNaoExistente, usuarioDto);
         });
     }
 
     @Test
     public void excluirDeveriaEliminarUmRegistro() {
-        service.excluir(idParaDelecao); // 4L
+        service.excluir(idParaDelecao);
 
-        Assertions.assertEquals(contagemTotalDeFuncoes - 1, repository.count());
+        Assertions.assertEquals(contagemTotalDeUsuarios - 1, repository.count());
     }
 
     @Test
