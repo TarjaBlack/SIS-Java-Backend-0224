@@ -29,7 +29,7 @@ public class TipoContaRepositoryTests {
     void Setup() {
         idExistente = 1L;
         idNaoExistente = 999L;
-        contagemTotalDeTipoContas = 3L;
+        contagemTotalDeTipoContas = 4L;
     }
 
     @Test
