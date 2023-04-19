@@ -55,6 +55,10 @@ public class UsuarioControllerTestsTI {
         );
 
         resultado.andExpect(status().isOk());
+        resultado.andExpect(jsonPath("$.id").exists());
+        resultado.andExpect(jsonPath("$.nome").exists());
+        resultado.andExpect(jsonPath("$.sobrenome").exists());
+        resultado.andExpect(jsonPath("$.email").exists());
     }
 
     @Test

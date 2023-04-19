@@ -55,6 +55,13 @@ public class ContaControllerTestsTI {
         );
 
         resultado.andExpect(status().isOk());
+        resultado.andExpect(jsonPath("$.id").exists());
+        resultado.andExpect(jsonPath("$.banco").exists());
+        resultado.andExpect(jsonPath("$.agencia").exists());
+        resultado.andExpect(jsonPath("$.numero").exists());
+        resultado.andExpect(jsonPath("$.limite").exists());
+        resultado.andExpect(jsonPath("$.saldo").exists());
+        resultado.andExpect(jsonPath("$.tipo_conta_id").exists());
     }
 
     @Test

@@ -29,7 +29,7 @@ public class FuncaoRepositoryTests {
     void Setup() {
         idExistente = 1L;
         idNaoExistente = 999L;
-        contagemTotalDeFuncoes = 3L;
+        contagemTotalDeFuncoes = 4L;
     }
 
     @Test

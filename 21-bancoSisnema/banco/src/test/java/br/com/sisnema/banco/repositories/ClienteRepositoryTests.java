@@ -28,7 +28,7 @@ public class ClienteRepositoryTests {
     void setup() {
         idExistente = 1L;
         idNaoExistente = 999L;
-        contagemTotalDeClientes = 3L;
+        contagemTotalDeClientes = 4L;
     }
 
     @Test

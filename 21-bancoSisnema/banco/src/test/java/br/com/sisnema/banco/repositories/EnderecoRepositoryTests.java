@@ -29,7 +29,7 @@ public class EnderecoRepositoryTests {
     void Setup() {
         idExistente = 1L;
         idNaoExistente = 999L;
-        contagemTotalDeEnderecos = 3L;
+        contagemTotalDeEnderecos = 4L;
     }
 
     @Test

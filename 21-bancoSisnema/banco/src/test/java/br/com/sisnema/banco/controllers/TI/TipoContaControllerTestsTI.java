@@ -55,6 +55,8 @@ public class TipoContaControllerTestsTI {
         );
 
         resultado.andExpect(status().isOk());
+        resultado.andExpect(jsonPath("$.id").exists());
+        resultado.andExpect(jsonPath("$.tipo").exists());
     }
 
     @Test
