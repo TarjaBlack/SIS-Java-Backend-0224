@@ -1,7 +1,8 @@
 package br.com.sisnema.banco.controllers;
 
-import br.com.sisnema.banco.dtos.FuncaoDto;
+import br.com.sisnema.banco.dtos.UsuarioAtualizarDto;
 import br.com.sisnema.banco.dtos.UsuarioDto;
+import br.com.sisnema.banco.dtos.UsuarioInserirDto;
 import br.com.sisnema.banco.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDto> inserir(@RequestBody UsuarioDto dto) {
+    public ResponseEntity<UsuarioDto> inserir(@RequestBody UsuarioInserirDto dto) {
         UsuarioDto newDto = service.inserir(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -39,7 +40,7 @@ public class UsuarioController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UsuarioDto> atualizar(@PathVariable Long id, @RequestBody UsuarioDto dto) {
+    public ResponseEntity<UsuarioDto> atualizar(@PathVariable Long id, @RequestBody UsuarioAtualizarDto dto) {
         UsuarioDto newDto = service.atualizar(id, dto);
         return ResponseEntity.ok().body(newDto);
     }

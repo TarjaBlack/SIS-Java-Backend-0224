@@ -1,7 +1,9 @@
 package br.com.sisnema.banco.services;
 
 import br.com.sisnema.banco.dtos.FuncaoDto;
+import br.com.sisnema.banco.dtos.UsuarioAtualizarDto;
 import br.com.sisnema.banco.dtos.UsuarioDto;
+import br.com.sisnema.banco.dtos.UsuarioInserirDto;
 import br.com.sisnema.banco.entities.Funcao;
 import br.com.sisnema.banco.entities.Usuario;
 import br.com.sisnema.banco.repositories.FuncaoRepository;
@@ -14,6 +16,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,9 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private FuncaoRepository funcaoRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional(readOnly = true)
     public List<UsuarioDto> procurarTodos() {
         List<Usuario> list = repository.findAll();
@@ -47,16 +53,16 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Transactional
-    public UsuarioDto inserir(UsuarioDto dto) {
+    public UsuarioDto inserir(UsuarioInserirDto dto) {
         Usuario entidade = new Usuario();
         copiarDtoParaEntidade(dto, entidade);
-        // A senha será criptografada
+        entidade.setSenha(passwordEncoder.encode(dto.getSenha()));
         entidade = repository.save(entidade);
         return new UsuarioDto(entidade);
     }
 
     @Transactional
-    public UsuarioDto atualizar(Long id, UsuarioDto dto) {
+    public UsuarioDto atualizar(Long id, UsuarioAtualizarDto dto) {
         try {
             Usuario entidade = repository.getReferenceById(id);
             copiarDtoParaEntidade(dto, entidade);
