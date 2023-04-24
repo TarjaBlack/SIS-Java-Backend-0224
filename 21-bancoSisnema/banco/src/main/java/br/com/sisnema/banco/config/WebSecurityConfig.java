@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override // Pertence ao OAUTH2
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/actuator/**");
+        web.ignoring().antMatchers("/actuator/**"); // /v1/clientes, /v1/funcoes
     }
 
     @Override
