@@ -26,7 +26,7 @@ public class Usuario implements Serializable, UserDetails {
     private String email;
     private String senha;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_usuario_funcao",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "funcao_id"))
